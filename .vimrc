@@ -1,7 +1,7 @@
 set encoding=utf-8
 set fileencodings=euc-jp,utf-8,iso-2022-jp,cp932,sjis
 set fileformats=unix,dos,mac
-" 保存されていないファイルがあるときでも別のファイルを開けるようにする
+"  保存されていないファイルがあるときでも別のファイルを開けるようにする
 set hidden
 
 " タブを表示するときの幅
