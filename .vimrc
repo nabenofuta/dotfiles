@@ -104,7 +104,8 @@ nnoremap <silent> ,11 :set columns=150 <CR>
 " カーソル移動
 nnoremap <silent> j gj
 nnoremap <silent> k gk
-
+nnoremap <silent> <Down> gj
+nnoremap <silent> <Up> gk
 
 " ペースト
 " encording変換
@@ -118,19 +119,22 @@ nnoremap <silent> ,uf :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
 nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
 nnoremap <silent> ,uu :<C-u>Unite file_mru <CR>
 "tab操作
-nnoremap <silent> ,tt :tabnew <CR>
-nnoremap <silent> ,tn :tabn <CR>
-nnoremap <silent> ,tp :tabp <CR>
-nnoremap <silent> ,tc :tabc <CR>
-nnoremap <silent> ,to :tabo <CR>
-nnoremap <silent> ,tr :tabr <CR>
-nnoremap <silent> ,tl :tabl <CR>
+nnoremap <silent> ,tt :tabnew<CR>
+nnoremap <silent> ,tn :tabn<CR>
+nnoremap <silent> ,tp :tabp<CR>
+nnoremap <silent> ,tc :tabc<CR>
+nnoremap <silent> ,to :tabo<CR>
+nnoremap <silent> ,tr :tabr<CR>
+nnoremap <silent> ,tl :tabl<CR>
 "vimshell
 " nnoremap <silent> ,zz :VimShell <CR>
 " buffer 操作
 nnoremap <silent> ,bb :b#<CR>
 nnoremap <silent> ,bd :bd!<CR>
 nnoremap <silent><C-B> :enew<CR>
+" カーソルを常にディスプレイ中央にする
+nnoremap <silent> ,21 :set scrolloff=9999<CR>
+nnoremap <silent> ,22 :set scrolloff=0<CR>
 
 call neobundle#end()
 

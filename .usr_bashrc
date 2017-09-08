@@ -1,0 +1,2 @@
+TD=`date +"%Y%m%d"`
+export TD
