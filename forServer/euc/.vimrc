@@ -1,5 +1,5 @@
 set encoding=euc-jp
-set fileencodings=utf-8,iso-2022-jp,cp932,sjis
+set fileencodings=euc-jp,utf-8,iso-2022-jp,cp932,sjis
 set fileformats=unix,dos,mac
 
 " 保存されていないファイルがあるときでも別のファイルを開けるようにする
@@ -28,7 +28,6 @@ inoremap <C-D> <ESC>ddi
 " 通常モード 全削除
 nnoremap <silent><C-Z> :%d<CR>
 
-
 " Note: Skip initialization for vim-tiny or vim-small.
 if 0 | endif
 
@@ -37,6 +36,9 @@ nnoremap <silent> j gj
 nnoremap <silent> k gk
 nnoremap <silent> <Down> gj
 nnoremap <silent> <Up> gk
+" 挿入モード時 カーソルの移動
+imap <C-F> <Right>
+imap <C-B> <Left>
 
 " encording変換
 nnoremap <silent> ,E :set fileencoding=euc-jp <CR>
