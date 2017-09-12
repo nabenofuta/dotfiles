@@ -119,11 +119,29 @@ NeoBundle 'Shougo/vimshell.vim'
 
 " コメントアウトを補助する
 NeoBundle 'tyru/caw.vim.git'
+" HTML 補完
+NeoBundle 'mattn/emmet-vim'
+" css 補完
+NeoBundle 'hail2u/vim-css3-syntax'
+" css カラー
+NeoBundle 'gko/vim-coloresque'
+" インデント表示
+NeoBundle 'Yggdroot/indentLine'
+"Ctag 利用
+" プロジェクトのルートディレクトリで1度だけ
+" :TagsGenerate を手動実行する
+NeoBundle 'szw/vim-tags'
+let g:vim_tags_project_tags_command = "/usr/bin/ctags -R {OPTIONS} {DIRECTORY} 2>/dev/null"
+let g:vim_tags_gems_tags_command = "/usr/bin/ctags -R {OPTIONS} `bundle show --paths` 2>/dev/null"
+"tagbar
+NeoBundle 'majutsushi/tagbar.git'
 
 "File Tree表示
 NeoBundle 'scrooloose/nerdtree'
 " Unite.vim 
 NeoBundle 'Shougo/unite.vim'
+" Outline
+NeoBundle 'Shougo/unite-outline'
 
 "--- NERDTree config ---
 nnoremap <silent><C-F> :NERDTreeToggle<CR>
@@ -135,6 +153,11 @@ nnoremap <silent><C-M> :PrevimOpen<CR>
 "--- vimshell config ---
 nnoremap <silent> ,zz :VimShell <CR>
 
+"---- tagbar config ---
+let g:tagbar_left = 0
+let g:tagbar_autofocus = 1
+nnoremap <silent> ,tg :TagbarToggle<CR>
+
 "--- Unit.vim config ---
 " 入力モードで開始する
 let g:unite_enable_start_insert=1
@@ -145,6 +168,7 @@ nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
 nnoremap <silent> ,uf :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
 nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
 nnoremap <silent> ,uu :<C-u>Unite file_mru <CR>
+nnoremap <silent> ,uo :<C-u>Unite outline<CR>
 
 " --- markdown 関連 config ---
 " .md のファイルをmarkdownのファイルタイプとして認識する
@@ -153,8 +177,95 @@ au BufRead,BufNewFile *.md set filetype=markdown
 " PART3-2 ----- PHP 向けIDE
 " http://kaworu.jpn.org/vim/vim%E3%81%AEPHP%E9%96%8B%E7%99%BA%E7%92%B0%E5%A2%83
 
+" neocomplete ---------------start
+NeoBundle 'Shougo/neocomplete.vim'
 
 
+"Note: This option must be set in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
+" Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+" Use neocomplete.
+let g:neocomplete#enable_at_startup = 1
+" Use smartcase.
+let g:neocomplete#enable_smart_case = 1
+" Set minimum syntax keyword length.
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+
+" Define dictionary.
+let g:neocomplete#sources#dictionary#dictionaries = {
+    \ 'default' : '',
+    \ 'vimshell' : $HOME.'/.vimshell_hist',
+    \ 'scheme' : $HOME.'/.gosh_completions'
+        \ }
+
+" Define keyword.
+if !exists('g:neocomplete#keyword_patterns')
+    let g:neocomplete#keyword_patterns = {}
+endif
+let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+
+" Plugin key-mappings.
+inoremap <expr><C-g>     neocomplete#undo_completion()
+inoremap <expr><C-l>     neocomplete#complete_common_string()
+
+" Recommended key-mappings.
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+  return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+  " For no inserting <CR> key.
+  "return pumvisible() ? "\<C-y>" : "\<CR>"
+endfunction
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+" Close popup by <Space>.
+"inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
+
+" AutoComplPop like behavior.
+"let g:neocomplete#enable_auto_select = 1
+
+" Shell like behavior(not recommended).
+"set completeopt+=longest
+"let g:neocomplete#enable_auto_select = 1
+"let g:neocomplete#disable_auto_complete = 1
+"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
+
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+" Enable heavy omni completion.
+if !exists('g:neocomplete#sources#omni#input_patterns')
+  let g:neocomplete#sources#omni#input_patterns = {}
+endif
+"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+
+" For perlomni.vim setting.
+" https://github.com/c9s/perlomni.vim
+let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+" neocomplete -------------- end
+
+" phpの説明表示 neocomplete-php.vim--------------- start 
+NeoBundle 'violetyk/neocomplete-php.vim'
+let g:neocomplete_php_locale = 'ja'
+" 一度だけ、以下を実行する
+" :PhpMakeDict ja
+" phpの説明表示 neocomplete-php.vim--------------- end
+
+" snipet -------------------- start  
+NeoBundle 'Shougo/neosnippet'
+NeoBundle 'Shougo/neosnippet-snippets'
+" imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+" smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+" snipet -------------------- end
 
 " PART3 END---------- 
 call neobundle#end()
