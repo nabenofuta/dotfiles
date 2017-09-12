@@ -1,17 +1,38 @@
 set encoding=utf-8
 set fileencodings=euc-jp,utf-8,iso-2022-jp,cp932,sjis
 set fileformats=unix,dos,mac
-"  ÊİÂ¸¤µ¤ì¤Æ¤¤¤Ê¤¤¥Õ¥¡¥¤¥ë¤¬¤¢¤ë¤È¤­¤Ç¤âÊÌ¤Î¥Õ¥¡¥¤¥ë¤ò³«¤±¤ë¤è¤¦¤Ë¤¹¤ë
+"  ä¿å­˜ã•ã‚Œã¦ã„ãªã„ãƒ•ã‚¡ã‚¤ãƒ«ãŒã‚ã‚‹ã¨ãã§ã‚‚åˆ¥ã®ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ã‘ã‚‹ã‚ˆã†ã«ã™ã‚‹
 set hidden
 
-" ¥¿¥Ö¤òÉ½¼¨¤¹¤ë¤È¤­¤ÎÉı
+
+" ç’°å¢ƒã”ã¨ã®åˆ‡ã‚Šåˆ†ã‘ã“ã‚Œã§ã€Winç”¨ã¨Linuxç”¨é€”å…±ç”¨ã«ã§ãã‚‹ã®ã‹?
+" if has("mac")
+" 	let g:tagbar_ctags_bin = '/hogehoge/ctags'
+" endif
+" if has("win32")
+" 	let g:tagbar_ctags_bin = 'C:\hogehoge\ctags.exe'
+" endif
+
+
+" ã‚¿ãƒ–ã‚’è¡¨ç¤ºã™ã‚‹ã¨ãã®å¹…
 set tabstop=4
-" ¥¿¥Ö¤òÁŞÆş¤¹¤ë¤È¤­¤ÎÉı
+" ã‚¿ãƒ–ã‚’æŒ¿å…¥ã™ã‚‹ã¨ãã®å¹…
 set shiftwidth=4
-" ¥¿¥Ö¤ò¥¿¥Ö¤È¤·¤Æ°·¤¦(¥¹¥Ú¡¼¥¹¤ËÅ¸³«¤·¤Ê¤¤)
+" ã‚¿ãƒ–ã‚’ã‚¿ãƒ–ã¨ã—ã¦æ‰±ã†(ã‚¹ãƒšãƒ¼ã‚¹ã«å±•é–‹ã—ãªã„)
 set noexpandtab
 " 
 set softtabstop=0
+set number
+
+" ã‚ªãƒ¼ãƒˆã‚¤ãƒ³ãƒ‡ãƒ³ãƒˆ
+set autoindent
+set smartindent
+ 
+" Terminalã§ã®InsertModeå¼·èª¿
+" ã‚«ãƒ¼ã‚½ãƒ«è¡Œã‚’å¼·èª¿è¡¨ç¤ºã—ãªã„
+set nocursorline
+" æŒ¿å…¥ãƒ¢ãƒ¼ãƒ‰ã®æ™‚ã®ã¿ã€ã‚«ãƒ¼ã‚½ãƒ«è¡Œã‚’ãƒã‚¤ãƒ©ã‚¤ãƒˆã™ã‚‹
+autocmd InsertEnter,InsertLeave * set cursorline!
 
 set dictionary=/home/watanabe/.vim/words/db.words
 " set showtabline=2
@@ -19,26 +40,21 @@ set ambiwidth=double
 " show status
 set laststatus=2
 set statusline=%F%m%r%h%w\%=[TYPE=%Y]\[FORMAT=%{&ff}]\[ENC=%{&fileencoding}]\[LOW=%l/%L]
-" set buftype=nofile
-" set guioptions-=m
 
-" ÁªÂòÉôÊ¬¤ò¥¯¥ê¥Ã¥×¥Ü¡¼¥É¤Ë¥³¥Ô¡¼
+" é¸æŠéƒ¨åˆ†ã‚’ã‚¯ãƒªãƒƒãƒ—ãƒœãƒ¼ãƒ‰ã«ã‚³ãƒ”ãƒ¼
 vmap <C-C> "*y
-" Ctrl+Q¤ÇÅ½¤êÉÕ¤±
+" Ctrl+Qã§è²¼ã‚Šä»˜ã‘
 nmap <C-Q> "*pa<ESC>
-" ÁŞÆş¥â¡¼¥É»ş¡¢¥¯¥ê¥Ã¥×¥Ü¡¼¥É¤«¤éÅ½¤êÉÕ¤±
+" æŒ¿å…¥ãƒ¢ãƒ¼ãƒ‰æ™‚ã€ã‚¯ãƒªãƒƒãƒ—ãƒœãƒ¼ãƒ‰ã‹ã‚‰è²¼ã‚Šä»˜ã‘
 imap <C-Q> <ESC>"*pa
-" ÁªÂòÉôÊ¬¤ò¥¯¥ê¥Ã¥×¥Ü¡¼¥É¤ÎÃÍ¤ËÃÖ¤­´¹¤¨
+" é¸æŠéƒ¨åˆ†ã‚’ã‚¯ãƒªãƒƒãƒ—ãƒœãƒ¼ãƒ‰ã®å€¤ã«ç½®ãæ›ãˆ
 vmap <C-Q> d"*P
-" ¥³¥Ş¥ó¥É¥é¥¤¥ó»ş¡¢¥¯¥ê¥Ã¥×¥Ü¡¼¥É¤«¤éÅ½¤êÉÕ¤±
+" ã‚³ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³æ™‚ã€ã‚¯ãƒªãƒƒãƒ—ãƒœãƒ¼ãƒ‰ã‹ã‚‰è²¼ã‚Šä»˜ã‘
 cmap <C-Q> <C-R>*
 
-
-"¼­½ñ¸Æ½Ğ ÆşÎÏÃæ
+"è¾æ›¸å‘¼å‡º å…¥åŠ›ä¸­
 inoremap <C-K> <C-x><C-k>
-"¹Ôºï½ü ÆşÎÏÃæ
-inoremap <C-D> <ESC>ddi
-" ÄÌ¾ï¥â¡¼¥É Á´ºï½ü
+" é€šå¸¸ãƒ¢ãƒ¼ãƒ‰ å…¨å‰Šé™¤
 nnoremap <silent><C-Z> :%d<CR>
 
 
@@ -68,48 +84,84 @@ call neobundle#begin(expand('~/.vim/bundle/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
 
 " markdown preview
-NeoBundle 'plasticboy/vim-markdown'
+" NeoBundle 'plasticboy/vim-markdown'
+" ãƒªã‚¹ãƒˆã®ã‚¤ãƒ³ãƒ‡ãƒ³ãƒˆãªã©ã®è£œå®ŒãŒä¾¿åˆ©ãªã®ã§ã€ä¸‹è¨˜ã«å¤‰æ›´ã—ãŸ
+NeoBundle 'violetyk/iikanji-markdown.vim'
 NeoBundle 'kannokanno/previm'
 NeoBundle 'tyru/open-browser.vim'
 
 au BufRead,BufNewFile *.md set filetype=markdown
 
 
-" Ä¾¶á³«¤¤¤¿¥Õ¥¡¥¤¥ë¤ò³«¤¯
+" ç›´è¿‘é–‹ã„ãŸãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ã
 NeoBundle 'Shougo/neomru.vim'
 "
 " vim-shell
 NeoBundle 'Shougo/vimproc.vim'
-" NeoBundle 'Shougo/vimshell.vim'
+NeoBundle 'Shougo/vimshell.vim'
 
 " commentout
 NeoBundle 'tyru/caw.vim.git'
 
-"File TreeÉ½¼¨
+" " outLine
+" NeoBundle 'majutsushi/tagbar'
+" " OutLine ã®è¡¨ç¤ºéè¡¨ç¤º
+" nmap <F8> :TagbarToggle<CR>
+
+" NeoBundle 'jszakmeister/markdown2ctags'
+" " Add support for markdown files in tagbar.
+" let g:tagbar_type_markdown = {
+"     \ 'ctagstype': 'markdown',
+"     \ 'ctagsbin' : '/path/to/markdown2ctags.py',
+"     \ 'ctagsargs' : '-f - --sort=yes',
+"     \ 'kinds' : [
+"         \ 's:sections',
+"         \ 'i:images'
+"     \ ],
+"     \ 'sro' : '|',
+"     \ 'kind2scope' : {
+"         \ 's' : 'section',
+"     \ },
+"     \ 'sort': 0,
+" \ }
+
+
+"File Treeè¡¨ç¤º
 NeoBundle 'scrooloose/nerdtree'
+" éš ã—ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã§è¡¨ç¤ºã•ã›ã‚‹
+let NERDTreeShowHidden = 1
 
 NeoBundle 'Shougo/unite.vim'
 " Unit.vim config
-" ÆşÎÏ¥â¡¼¥É¤Ç³«»Ï¤¹¤ë
+" å…¥åŠ›ãƒ¢ãƒ¼ãƒ‰ã§é–‹å§‹ã™ã‚‹
 let g:unite_enable_start_insert=1
 
-" ¥Ğ¥Ã¥Õ¥¡°ìÍ÷
+" ãƒãƒƒãƒ•ã‚¡ä¸€è¦§
 noremap <C-P> :Unite buffer<CR>
 " NERDTree 
 nnoremap <silent><C-F> :NERDTreeToggle<CR>
 
-"²èÌÌ¥µ¥¤¥ºÊÑ¹¹
+"ç”»é¢ã‚µã‚¤ã‚ºå¤‰æ›´
 nnoremap <silent> ,11 :set columns=150 <CR>
+<<<<<<< HEAD
 " markdown preview
 nnoremap <silent><C-M> :PrevimOpen<CR>
 " ¥«¡¼¥½¥ë°ÜÆ°
+=======
+
+" ã‚«ãƒ¼ã‚½ãƒ«ç§»å‹•
+>>>>>>> 502f86a8ea5c8f6cfd3987a2035d4b45f63e93d2
 nnoremap <silent> j gj
 nnoremap <silent> k gk
 nnoremap <silent> <Down> gj
 nnoremap <silent> <Up> gk
 
-" ¥Ú¡¼¥¹¥È
-" encordingÊÑ´¹
+" æŒ¿å…¥ãƒ¢ãƒ¼ãƒ‰æ™‚ ã‚«ãƒ¼ã‚½ãƒ«ã®ç§»å‹•
+imap <C-F> <Right>
+imap <C-B> <Left>
+
+" ãƒšãƒ¼ã‚¹ãƒˆ
+" encordingå¤‰æ›
 nnoremap <silent> ,E :set fileencoding=euc-jp <CR>
 nnoremap <silent> ,S :set fileencoding=cp932 <CR>
 nnoremap <silent> ,U :set fileencoding=utf-8 <CR>
@@ -119,7 +171,7 @@ nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
 nnoremap <silent> ,uf :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
 nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
 nnoremap <silent> ,uu :<C-u>Unite file_mru <CR>
-"tabÁàºî
+"tabæ“ä½œ
 nnoremap <silent> ,tt :tabnew<CR>
 nnoremap <silent> ,tn :tabn<CR>
 nnoremap <silent> ,tp :tabp<CR>
@@ -129,11 +181,11 @@ nnoremap <silent> ,tr :tabr<CR>
 nnoremap <silent> ,tl :tabl<CR>
 "vimshell
 " nnoremap <silent> ,zz :VimShell <CR>
-" buffer Áàºî
+" buffer æ“ä½œ
 nnoremap <silent> ,bb :b#<CR>
 nnoremap <silent> ,bd :bd!<CR>
 nnoremap <silent><C-B> :enew<CR>
-" ¥«¡¼¥½¥ë¤ò¾ï¤Ë¥Ç¥£¥¹¥×¥ì¥¤Ãæ±û¤Ë¤¹¤ë
+" ã‚«ãƒ¼ã‚½ãƒ«ã‚’å¸¸ã«ãƒ‡ã‚£ã‚¹ãƒ—ãƒ¬ã‚¤ä¸­å¤®ã«ã™ã‚‹
 nnoremap <silent> ,21 :set scrolloff=9999<CR>
 nnoremap <silent> ,22 :set scrolloff=0<CR>
 
@@ -145,3 +197,4 @@ filetype plugin on
 " If there are uninstalled bundles found on startup,
 " this will conveniently prompt you to install them.
 NeoBundleCheck
+
