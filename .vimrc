@@ -143,14 +143,11 @@ nnoremap <silent><C-F> :NERDTreeToggle<CR>
 
 "ç”»é¢ã‚µã‚¤ã‚ºå¤‰æ›´
 nnoremap <silent> ,11 :set columns=150 <CR>
-<<<<<<< HEAD
+
 " markdown preview
 nnoremap <silent><C-M> :PrevimOpen<CR>
-" ¥«¡¼¥½¥ë°ÜÆ°
-=======
 
 " ã‚«ãƒ¼ã‚½ãƒ«ç§»å‹•
->>>>>>> 502f86a8ea5c8f6cfd3987a2035d4b45f63e93d2
 nnoremap <silent> j gj
 nnoremap <silent> k gk
 nnoremap <silent> <Down> gj
