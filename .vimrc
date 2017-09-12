@@ -109,7 +109,6 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'violetyk/iikanji-markdown.vim'
 NeoBundle 'kannokanno/previm'
 NeoBundle 'tyru/open-browser.vim'
-
 " 直近開いたファイルを開く
 NeoBundle 'Shougo/neomru.vim'
 
@@ -125,6 +124,8 @@ NeoBundle 'mattn/emmet-vim'
 NeoBundle 'hail2u/vim-css3-syntax'
 " css カラー
 NeoBundle 'gko/vim-coloresque'
+" シンタックス
+NeoBundle 'vim-syntastic/syntastic'
 " インデント表示
 NeoBundle 'Yggdroot/indentLine'
 "Ctag 利用
@@ -143,6 +144,10 @@ NeoBundle 'Shougo/unite.vim'
 " Outline
 NeoBundle 'Shougo/unite-outline'
 
+"--- Color Scheme ---
+syntax on
+colorscheme molokai
+set t_Co=256
 "--- NERDTree config ---
 nnoremap <silent><C-F> :NERDTreeToggle<CR>
 " 隠しファイルをデフォルトで表示させる
@@ -157,6 +162,19 @@ nnoremap <silent> ,zz :VimShell <CR>
 let g:tagbar_left = 0
 let g:tagbar_autofocus = 1
 nnoremap <silent> ,tg :TagbarToggle<CR>
+
+"--- syntax config ---
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+"perl check
+let g:syntastic_enable_perl_checker = 1
+let g:syntastic_perl_checkers = ['perl', 'podchecker']
 
 "--- Unit.vim config ---
 " 入力モードで開始する
