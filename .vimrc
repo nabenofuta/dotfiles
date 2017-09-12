@@ -100,7 +100,8 @@ nnoremap <silent><C-F> :NERDTreeToggle<CR>
 
 "画面サイズ変更
 nnoremap <silent> ,11 :set columns=150 <CR>
-
+" markdown preview
+nnoremap <silent><C-M> :PrevimOpen<CR>
 " カーソル移動
 nnoremap <silent> j gj
 nnoremap <silent> k gk
