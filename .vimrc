@@ -2,6 +2,10 @@
 set encoding=utf-8
 set fileencodings=euc-jp,utf-8,iso-2022-jp,cp932,sjis
 set fileformats=unix,dos,mac
+"  swap の保存場所
+set directory=~/.vim/swap
+"  backup の保存場所
+set backupdir=~/.vim/tmp
 "  保存されていないファイルがあるときでも別のファイルを開けるようにする
 set hidden
 " タブを表示するときの幅
@@ -29,6 +33,14 @@ set ambiwidth=double
 set laststatus=2
 set statusline=%F%m%r%h%w\%=[TYPE=%Y]\[FORMAT=%{&ff}]\[ENC=%{&fileencoding}]\[LOW=%l/%L]
 
+" 括弧の対応を表示する
+set showmatch
+source $VIMRUNTIME/macros/matchit.vim
+" 検索時にハイライト
+set hlsearch
+" コマンドの補完を表示
+set wildmenu
+
 " PART1 END---------- 
 
 " PART2------------ キーバインド設定~
@@ -42,8 +54,6 @@ imap <C-Q> <ESC>"*pa
 vmap <C-Q> d"*P
 " コマンドライン時、クリップボードから貼り付け
 cmap <C-Q> <C-R>*
-"辞書呼出 入力中
-inoremap <C-K> <C-x><C-k>
 " 通常モード 全削除
 nnoremap <silent><C-Z> :%d<CR>
 "tab操作
@@ -69,6 +79,11 @@ nnoremap <silent> <Up> gk
 " 挿入モード時 カーソルの移動
 imap <C-F> <Right>
 imap <C-B> <Left>
+imap <C-G><C-J> <Down>
+imap <C-G><C-K> <Up>
+"挿入モード時 カーソルより後ろを削除
+imap <C-K> <ESC>ld$A
+
 " ペースト
 " encording変換
 nnoremap <silent> ,E :set fileencoding=euc-jp <CR>
@@ -151,7 +166,7 @@ set t_Co=256
 "--- NERDTree config ---
 nnoremap <silent><C-F> :NERDTreeToggle<CR>
 " 隠しファイルをデフォルトで表示させる
-let NERDTreeShowHidden = 1
+"let NERDTreeShowHidden = 1
 
 "--- markdown preview config ---
 nnoremap <silent><C-M> :PrevimOpen<CR>
@@ -175,18 +190,38 @@ let g:syntastic_check_on_wq = 0
 "perl check
 let g:syntastic_enable_perl_checker = 1
 let g:syntastic_perl_checkers = ['perl', 'podchecker']
+"php check
+let g:php_baselib       = 1
+let g:php_htmlInStrings = 1
+let g:php_noShortTags   = 1
+let g:php_sql_query     = 1
 
 "--- Unit.vim config ---
 " 入力モードで開始する
-let g:unite_enable_start_insert=1
-" バッファ一覧
-noremap <C-P> :Unite buffer<CR>
-nnoremap <silent> ,uy :<C-u>Unite history/yank<CR>
-nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
-nnoremap <silent> ,uf :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
-nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
-nnoremap <silent> ,uu :<C-u>Unite file_mru <CR>
-nnoremap <silent> ,uo :<C-u>Unite outline<CR>
+" let g:unite_enable_start_insert=1
+" バッファ一覧 -direction=botright -auto-resize -toggle
+noremap <C-P> :Unite buffer  -direction=botright -auto-resize <CR>
+nnoremap <silent> ,uy :<C-u>Unite history/yank -direction=botright -auto-resize <CR>
+nnoremap <silent> ,ub :<C-u>Unite buffer -direction=botright -auto-resize <CR>
+nnoremap <silent> ,uf :<C-u>UniteWithBufferDir -buffer-name=files file -direction=botright -auto-resize <CR>
+nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register -direction=botright -auto-resize <CR>
+nnoremap <silent> ,uu :<C-u>Unite file_mru  -direction=botright -auto-resize <CR>
+nnoremap <silent> ,uo :<C-u>Unite outline -direction=botright -auto-resize <CR>
+
+" grep検索
+nnoremap <silent> ,g  :<C-u>Unite grep:. -buffer-name=search-buffer -direction=botright -auto-resize <CR>
+
+"カーソル位置の単語をgrep検索
+nnoremap <silent> ,cg :<C-u>Unite grep:. -buffer-name=search-buffer -direction=botright -auto-resize <CR><C-R><C-W>
+
+" grep検索結果の再呼出
+nnoremap <silent> ,r  :<C-u>UniteResume search-buffer -direction=botright -auto-resize <CR>
+" unite grepにhw(highway)を使う
+if executable('hw')
+  let g:unite_source_grep_command = 'hw'
+  let g:unite_source_grep_default_opts = '--no-group --no-color'
+  let g:unite_source_grep_recursive_opt = ''
+endif
 
 " --- markdown 関連 config ---
 " .md のファイルをmarkdownのファイルタイプとして認識する
@@ -207,7 +242,7 @@ let g:neocomplete#enable_at_startup = 1
 " Use smartcase.
 let g:neocomplete#enable_smart_case = 1
 " Set minimum syntax keyword length.
-let g:neocomplete#sources#syntax#min_keyword_length = 3
+let g:neocomplete#sources#syntax#min_keyword_length = 2
 
 " Define dictionary.
 let g:neocomplete#sources#dictionary#dictionaries = {
@@ -285,6 +320,7 @@ NeoBundle 'Shougo/neosnippet-snippets'
 " smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 " snipet -------------------- end
 
+" imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 " PART3 END---------- 
 call neobundle#end()
 
