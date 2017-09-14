@@ -47,9 +47,9 @@ set wildmenu
 " 選択部分をクリップボードにコピー
 vmap <C-C> "*y
 " Ctrl+Qで貼り付け
-nmap <C-Q> "*pa<ESC>
+nnoremap <C-Q> "*pa<ESC>
 " 挿入モード時、クリップボードから貼り付け
-imap <C-Q> <ESC>"*pa
+inoremap <C-Q> <ESC>"*pa
 " 選択部分をクリップボードの値に置き換え
 vmap <C-Q> d"*P
 " コマンドライン時、クリップボードから貼り付け
@@ -77,12 +77,14 @@ nnoremap <silent> k gk
 nnoremap <silent> <Down> gj
 nnoremap <silent> <Up> gk
 " 挿入モード時 カーソルの移動
-imap <C-F> <Right>
-imap <C-B> <Left>
-imap <C-G><C-J> <Down>
-imap <C-G><C-K> <Up>
+inoremap <C-F> <Right>
+inoremap <C-B> <Left>
+inoremap <C-G><C-J> <Down>
+inoremap <C-G><C-K> <Up>
 "挿入モード時 カーソルより後ろを削除
-imap <C-K> <ESC>ld$A
+inoremap <C-K> <ESC>ld$A
+"辞書
+inoremap <C-M> <C-X><C-K>
 
 " ペースト
 " encording変換
@@ -158,6 +160,8 @@ NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'Shougo/unite.vim'
 " Outline
 NeoBundle 'Shougo/unite-outline'
+" 括弧の入力補助
+NeoBundle 'cohama/lexima.vim'
 
 "--- Color Scheme ---
 syntax on
@@ -316,11 +320,10 @@ let g:neocomplete_php_locale = 'ja'
 " snipet -------------------- start  
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/neosnippet-snippets'
-" imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-" smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+
+filetype plugin indent on
 " snipet -------------------- end
 
-" imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 " PART3 END---------- 
 call neobundle#end()
 
