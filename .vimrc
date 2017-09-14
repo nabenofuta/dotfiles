@@ -162,11 +162,18 @@ NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/unite-outline'
 " 括弧の入力補助
 NeoBundle 'cohama/lexima.vim'
-
+"カラースキームを一括DL
+NeoBundle 'flazz/vim-colorschemes'
+" カラースキームのプレビュー :Unite -auto-preview colorscheme
+NeoBundle 'ujihisa/unite-colorscheme'
 "--- Color Scheme ---
 syntax on
-colorscheme molokai
+colorscheme badwolf
+"colorscheme distinguished
+" colorscheme desertink
+" colorscheme evening
 set t_Co=256
+
 "--- NERDTree config ---
 nnoremap <silent><C-F> :NERDTreeToggle<CR>
 " 隠しファイルをデフォルトで表示させる
