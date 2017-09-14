@@ -40,6 +40,11 @@ source $VIMRUNTIME/macros/matchit.vim
 set hlsearch
 " コマンドの補完を表示
 set wildmenu
+" マウスを利用
+set mouse=a
+set ttymouse=xterm2
+" ヤンクをクリップボードへ
+set clipboard=unnamedplus
 
 " PART1 END---------- 
 
@@ -82,7 +87,7 @@ inoremap <C-B> <Left>
 inoremap <C-G><C-J> <Down>
 inoremap <C-G><C-K> <Up>
 "挿入モード時 カーソルより後ろを削除
-inoremap <C-K> <ESC>ld$A
+"inoremap <C-K> <ESC>ld$A
 "辞書
 inoremap <C-M> <C-X><C-K>
 
@@ -111,7 +116,6 @@ function! ImInActivate()
 	call system('fcitx-remote -c')
 endfunction
 inoremap <silent> <C-[> <ESC>:call ImInActivate()<CR>
-
 
 " Required:
 call neobundle#begin(expand('~/.vim/bundle/'))
@@ -151,6 +155,8 @@ NeoBundle 'Yggdroot/indentLine'
 NeoBundle 'szw/vim-tags'
 let g:vim_tags_project_tags_command = "/usr/bin/ctags -R {OPTIONS} {DIRECTORY} 2>/dev/null"
 let g:vim_tags_gems_tags_command = "/usr/bin/ctags -R {OPTIONS} `bundle show --paths` 2>/dev/null"
+" tagが複数あった場合は一覧表示
+nnoremap <C-]> g<C-]> 
 "tagbar
 NeoBundle 'majutsushi/tagbar.git'
 
@@ -161,15 +167,17 @@ NeoBundle 'Shougo/unite.vim'
 " Outline
 NeoBundle 'Shougo/unite-outline'
 " 括弧の入力補助
-NeoBundle 'cohama/lexima.vim'
+" NeoBundle 'cohama/lexima.vim'
 "カラースキームを一括DL
-NeoBundle 'flazz/vim-colorschemes'
+"NeoBundle 'flazz/vim-colorschemes'
 " カラースキームのプレビュー :Unite -auto-preview colorscheme
-NeoBundle 'ujihisa/unite-colorscheme'
+"NeoBundle 'ujihisa/unite-colorscheme'
 "--- Color Scheme ---
 syntax on
-colorscheme badwolf
-"colorscheme distinguished
+colorscheme molokai
+let g:molokai_original = 1
+let g:rehash256 = 1
+" colorscheme distinguished
 " colorscheme desertink
 " colorscheme evening
 set t_Co=256
@@ -181,6 +189,7 @@ nnoremap <silent><C-F> :NERDTreeToggle<CR>
 
 "--- markdown preview config ---
 nnoremap <silent><C-M> :PrevimOpen<CR>
+nnoremap <CR> <CR>
 "--- vimshell config ---
 nnoremap <silent> ,zz :VimShell <CR>
 
@@ -326,16 +335,37 @@ let g:neocomplete_php_locale = 'ja'
 
 " snipet -------------------- start  
 NeoBundle 'Shougo/neosnippet'
+
 NeoBundle 'Shougo/neosnippet-snippets'
 
-filetype plugin indent on
+" Plugin key-mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+" SuperTab like snippets behavior.
+"imap <expr><TAB>
+" \ pumvisible() ? "\<C-n>" :
+" \ neosnippet#expandable_or_jumpable() ?
+" \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+" For conceal markers.
+if has('conceal')
+  set conceallevel=2 concealcursor=niv
+  endif
+
+"独自スニペットを保存するフォルダ
+let g:neosnippet#snippets_directory='~/.vim/bundle/neosnippet-snippets/neosnippets'
+
 " snipet -------------------- end
 
 " PART3 END---------- 
 call neobundle#end()
 
 " Required:
-filetype plugin on
+filetype plugin indent on
 
 " If there are uninstalled bundles found on startup,
 " this will conveniently prompt you to install them.
