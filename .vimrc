@@ -6,6 +6,7 @@ set fileformats=unix,dos,mac
 set directory=~/.vim/swap
 "  backup の保存場所
 set backupdir=~/.vim/tmp
+set backspace=indent,eol,start
 "  保存されていないファイルがあるときでも別のファイルを開けるようにする
 set hidden
 " タブを表示するときの幅
@@ -14,7 +15,10 @@ set tabstop=4
 set shiftwidth=4
 " タブをタブとして扱う(スペースに展開しない)
 set noexpandtab
-" 
+" gvim Option
+set guioptions-=m
+set guioptions-=T
+
 set softtabstop=0
 set number
 " オートインデント
@@ -32,6 +36,8 @@ set ambiwidth=double
 " ステータスバーの表示
 set laststatus=2
 set statusline=%F%m%r%h%w\%=[TYPE=%Y]\[FORMAT=%{&ff}]\[ENC=%{&fileencoding}]\[LOW=%l/%L]
+" バーチャルモードでカーソル移動
+set virtualedit+=block
 
 " 括弧の対応を表示する
 set showmatch
@@ -76,6 +82,9 @@ nnoremap <silent><C-B> :enew<CR>
 " カーソルを常にディスプレイ中央にする
 nnoremap <silent> ,21 :set scrolloff=9999<CR>
 nnoremap <silent> ,22 :set scrolloff=0<CR>
+" 折り返して文字を表示する
+nnoremap <silent> ,11 :set nowrap<CR>
+nnoremap <silent> ,12 :set wrap<CR>
 " カーソル移動
 nnoremap <silent> j gj
 nnoremap <silent> k gk
@@ -89,7 +98,7 @@ inoremap <C-G><C-K> <Up>
 "挿入モード時 カーソルより後ろを削除
 "inoremap <C-K> <ESC>ld$A
 "辞書
-inoremap <C-M> <C-X><C-K>
+inoremap <C-E> <C-X><C-K>
 
 " ペースト
 " encording変換
@@ -167,20 +176,24 @@ NeoBundle 'Shougo/unite.vim'
 " Outline
 NeoBundle 'Shougo/unite-outline'
 " 括弧の入力補助
-" NeoBundle 'cohama/lexima.vim'
+ NeoBundle 'cohama/lexima.vim'
 "カラースキームを一括DL
 "NeoBundle 'flazz/vim-colorschemes'
 " カラースキームのプレビュー :Unite -auto-preview colorscheme
 "NeoBundle 'ujihisa/unite-colorscheme'
 "--- Color Scheme ---
 syntax on
+" syntax enable
+" if $TERM == 'screen'
+" 	set t_Co=256
+" endif
+set t_Co=256
 colorscheme molokai
 let g:molokai_original = 1
 let g:rehash256 = 1
 " colorscheme distinguished
 " colorscheme desertink
 " colorscheme evening
-set t_Co=256
 
 "--- NERDTree config ---
 nnoremap <silent><C-F> :NERDTreeToggle<CR>
@@ -293,7 +306,7 @@ endfunction
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " <C-h>, <BS>: close popup and delete backword char.
 inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<BS>"
 " Close popup by <Space>.
 "inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
 
@@ -344,12 +357,9 @@ smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>     <Plug>(neosnippet_expand_target)
 
 " SuperTab like snippets behavior.
-"imap <expr><TAB>
-" \ pumvisible() ? "\<C-n>" :
-" \ neosnippet#expandable_or_jumpable() ?
-" \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+imap <expr><C-l>
+			\ neosnippet#expandable() <Bar><Bar> neosnippet#jumpable() ?
+			\ "\<Plug>(neosnippet_expand_or_jump)" : "\<C-n>"
 
 " For conceal markers.
 if has('conceal')

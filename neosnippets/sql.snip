@@ -1,3 +1,60 @@
+snippet		BY GROUP_NUM
+abbr where group_num=''
+	where group_num='${1:groupId}'
+
+snippet		BY USR_NUM
+abbr	where group_num='' and usr_num=''
+	where group_num='${1:groupId}' and usr_num='${2:usrNum}'
+
+snippet     BY CLIENT_NUM
+abbr	where client_num='' 
+	where client_num='${1:clientId}' 
+
+snippet		BETWEEN
+abbr	between '' and ''
+	between '${1:start}' and '${2:end}'
+
+snippet		BETWEEN TIME
+abbr	between ' 0:00:00' and ' 23:59:59'
+	between '${1:YYYY-MM-DD} 0:00:00' and '${2:YYYY-MM-DD} 23:59:59'
+
+snippet		BETWEEN TIME2 
+abbr	between ' 0:00:00' and ' 0:00:00'
+	between '${1:YYYY-MM-DD} 0:00:00' and '${2:YYYY-MM-DD} 0:00:00'
+
+snippet		JOIN USR_NUM
+abbr join by  group_num ,usr_num 
+	${1:table1}.group_num = ${2:table2}.group_num
+	and ${1:table1}.usr_num = ${2:table2}.usr_num
+
+snippet		JOIN CLIENT_NUM
+abbr join by client_num
+	${1:table1}.client_num = ${2:table2}.client_num
+
+snippet     SELECT USR_TBL USR_NUM
+abbr	select ... from usr_tbl where group_num='' and usr_num=''
+	select ${1:column} from usr_tbl where group_num='${2:groupId}' and usr_num='${3:usrNum}'
+
+snippet     SELECT USR_TBL Q12
+abbr	select ... from usr_tbl where group_num='' and q12_a=''
+	select ${1:column} from usr_tbl where group_num='${2:groupId}' and q12_a='${3:TEXT}'
+
+snippet     SELECT USR_TBL Q
+abbr	select ... from usr_tbl where group_num='' and q..._a=''
+	select ${1:column} from usr_tbl where group_num='${2:groupId}' and q${3:qestion}_a='${4:TEXT}'
+
+snippet     SELECT USR_TBL CARD_NUM
+abbr	select ... from usr_tbl where group_num='' and card_num=''
+	select ${1:column} from usr_tbl where group_num='${2:groupId}' and card_num='${3:TEXT}'
+
+snippet     SELECT CARD_ID_TBL CARD_ID
+abbr	select * from card_id_tbl where group_num='' and card_num=''
+	select * from card_id_tbl where group_num='${1:groupId}' and card_num='${2:TEXT}'
+
+snippet     SELECT CARD_ID_TBL USR_NUM
+abbr	select * from card_id_tbl where group_num='' and usr_num=''
+	select * from card_id_tbl where group_num='${1:groupId}' and usr_num='${2:TEXT}'
+
 snippet     CREATE TABLE
 abbr        CREATE TABLE { ... }
 options     head
