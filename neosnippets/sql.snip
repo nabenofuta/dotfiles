@@ -31,6 +31,10 @@ snippet		JOIN CLIENT_NUM
 abbr join by client_num
 	${1:table1}.client_num = ${2:table2}.client_num
 
+snippet     SELECT POINT_TBL USR_NUM
+abbr	select ... from point_tbl where group_num='' and usr_num=''
+	select ${1:column} from point_tbl where group_num='${2:groupId}' and usr_num='${3:usrNum}'
+
 snippet     SELECT USR_TBL USR_NUM
 abbr	select ... from usr_tbl where group_num='' and usr_num=''
 	select ${1:column} from usr_tbl where group_num='${2:groupId}' and usr_num='${3:usrNum}'
@@ -48,8 +52,8 @@ abbr	select ... from usr_tbl where group_num='' and card_num=''
 	select ${1:column} from usr_tbl where group_num='${2:groupId}' and card_num='${3:TEXT}'
 
 snippet     SELECT CARD_ID_TBL CARD_ID
-abbr	select * from card_id_tbl where group_num='' and card_num=''
-	select * from card_id_tbl where group_num='${1:groupId}' and card_num='${2:TEXT}'
+abbr	select * from card_id_tbl where group_num='' and card_id=''
+	select * from card_id_tbl where group_num='${1:groupId}' and card_id='${2:TEXT}'
 
 snippet     SELECT CARD_ID_TBL USR_NUM
 abbr	select * from card_id_tbl where group_num='' and usr_num=''

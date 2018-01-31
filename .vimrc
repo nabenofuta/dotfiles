@@ -2,6 +2,8 @@
 set encoding=utf-8
 set fileencodings=euc-jp,utf-8,iso-2022-jp,cp932,sjis
 set fileformats=unix,dos,mac
+" 2バイト文字を正しく表示する
+set ambiwidth=double
 "  swap の保存場所
 set directory=~/.vim/swap
 "  backup の保存場所
@@ -22,8 +24,8 @@ set guioptions-=T
 set softtabstop=0
 set number
 " オートインデント
-set autoindent
-set smartindent
+set noautoindent
+set nosmartindent
 " TerminalでのInsertMode強調
 " カーソル行を強調表示しない
 set nocursorline
@@ -31,8 +33,6 @@ set nocursorline
 autocmd InsertEnter,InsertLeave * set cursorline!
 " 辞書設定
 set dictionary=/home/watanabe/.vim/words/db.words
-" 2バイト文字を正しく表示する
-set ambiwidth=double
 " ステータスバーの表示
 set laststatus=2
 set statusline=%F%m%r%h%w\%=[TYPE=%Y]\[FORMAT=%{&ff}]\[ENC=%{&fileencoding}]\[LOW=%l/%L]
@@ -95,6 +95,8 @@ inoremap <C-F> <Right>
 inoremap <C-B> <Left>
 inoremap <C-G><C-J> <Down>
 inoremap <C-G><C-K> <Up>
+" 挿入モード時 カーソルの文字削除
+inoremap <C-D> <Right><C-H>
 "挿入モード時 カーソルより後ろを削除
 "inoremap <C-K> <ESC>ld$A
 "辞書
@@ -168,6 +170,24 @@ let g:vim_tags_gems_tags_command = "/usr/bin/ctags -R {OPTIONS} `bundle show --p
 nnoremap <C-]> g<C-]> 
 "tagbar
 NeoBundle 'majutsushi/tagbar.git'
+" markdown tagbar
+NeoBundleFetch 'jszakmeister/markdown2ctags'
+
+let g:tagbar_type_markdown = {
+    \ 'ctagstype': 'markdown',
+    \ 'ctagsbin' : $HOME . '/.vim/bundle/markdown2ctags/markdown2ctags.py',
+    \ 'ctagsargs' : '-f - --sort=yes',
+    \ 'kinds' : [
+        \ 's:sections',
+        \ 'i:images'
+    \ ],
+    \ 'sro' : '|',
+    \ 'kind2scope' : {
+        \ 's' : 'section',
+    \ },
+    \ 'sort': 0,
+	\ }
+
 
 "File Tree表示
 NeoBundle 'scrooloose/nerdtree'
@@ -178,21 +198,25 @@ NeoBundle 'Shougo/unite-outline'
 " 括弧の入力補助
  NeoBundle 'cohama/lexima.vim'
 "カラースキームを一括DL
-"NeoBundle 'flazz/vim-colorschemes'
+NeoBundle 'flazz/vim-colorschemes'
 " カラースキームのプレビュー :Unite -auto-preview colorscheme
-"NeoBundle 'ujihisa/unite-colorscheme'
+NeoBundle 'ujihisa/unite-colorscheme'
 "--- Color Scheme ---
+NeoBundle 'jacoborus/tender.vim'
 syntax on
 " syntax enable
 " if $TERM == 'screen'
 " 	set t_Co=256
 " endif
 set t_Co=256
-colorscheme molokai
-let g:molokai_original = 1
-let g:rehash256 = 1
+colorscheme rdark-terminal
+" colorscheme adam 
+
+" colorscheme tender
+" colorscheme badwolf 
 " colorscheme distinguished
 " colorscheme desertink
+" colorscheme evening
 " colorscheme evening
 
 "--- NERDTree config ---
